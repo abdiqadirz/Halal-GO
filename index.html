@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Halal:Go</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Bootstrap & FontAwesome -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        crossorigin="anonymous">
+  <style>
+    body { scroll-behavior: smooth; }
+    #sidebar { width:220px; background:#f8f9fa; padding:1rem; position:fixed; top:0; bottom:0; }
+    #sidebar .nav-link { cursor:pointer; color:#495057; }
+    #sidebar .nav-link.active { background:#dc3545; color:#fff; }
+    #main { margin-left:240px; }
+    .hero {
+      background:url('images/restaurant-spotlight.jpg') center/cover no-repeat;
+      color:#fff; text-shadow:0 1px 4px rgba(0,0,0,.7);
+      padding:4rem 2rem;
+    }
+    .hero .lead { font-size:1.25rem; }
+    section { padding:3rem 1rem; }
+    .btn-toggle { margin-right:.5rem; }
+    .featured { overflow-x:auto; white-space:nowrap; padding-bottom:1rem; }
+    .featured .card { display:inline-block; width:280px; margin-right:1rem; cursor:pointer; }
+    .featured .card img { height:160px; object-fit:cover; }
+    footer { text-align:center; padding:1rem; background:#f8f9fa; }
+  </style>
+</head>
+<body>
+
+<nav id="sidebar" class="d-none d-md-block">
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link active" data-target="#home">Home</a></li>
+    <li class="nav-item"><a class="nav-link" data-target="#restaurants">Restaurants</a></li>
+    <li class="nav-item"><a class="nav-link" data-target="#mosques">Mosques</a></li>
+    <li class="nav-item"><a class="nav-link" data-target="#review">Leave Review</a></li>
+    <li class="nav-item"><a class="nav-link" data-target="#featured">Featured</a></li>
+  </ul>
+</nav>
+
+<div id="main">
+
+  <!-- HOME -->
+  <section id="home" class="hero text-center">
+    <h1 class="display-4">Welcome to Halal:Go!</h1>
+    <p class="lead">Find trusted halal restaurants and prayer spaces.</p>
+    <div class="mx-auto" style="max-width:600px; margin-top:1rem;">
+      <div class="input-group input-group-lg">
+        <input id="hero-search-input" type="text" class="form-control"
+               placeholder="Search restaurants, mosques...">
+        <div class="input-group-append">
+          <button id="hero-search-btn" class="btn btn-danger">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESTAURANTS -->
+  <section id="restaurants">
+    <div class="container">
+      <h2>Locate Restaurants</h2>
+      <!-- IMAGE CARDS -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="card"
+               onclick="window.open(
+                 'https://www.google.com/maps/search/?api=1&query=halal%20restaurants',
+                 '_blank'
+               )">
+            <img src="images/restaurant-spotlight.jpg" class="card-img-top" alt="Restaurant Spotlight">
+            <div class="card-body">
+              <h5 class="card-title">Restaurant Spotlight</h5>
+              <p class="card-text text-muted">Explore halal‑certified menus.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card"
+               onclick="window.open(
+                 'https://www.google.com/maps/search/?api=1&query=islamic%20cafes',
+                 '_blank'
+               )">
+            <img src="images/cafe-corner.jpg" class="card-img-top" alt="Café Corner">
+            <div class="card-body">
+              <h5 class="card-title">Café Corner</h5>
+              <p class="card-text text-muted">Try our Islamic cafés.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOGGLE BUTTONS & LISTS -->
+      <button class="btn btn-outline-primary btn-toggle" data-show="halal-list">
+        Halal Restaurants
+      </button>
+      <button class="btn btn-outline-secondary btn-toggle" data-show="cafe-list">
+        Islamic Cafés
+      </button>
+      <ul id="halal-list" class="list-group mt-3"></ul>
+      <ul id="cafe-list" class="list-group mt-3"></ul>
+    </div>
+  </section>
+
+  <!-- MOSQUES -->
+  <section id="mosques" class="bg-light">
+    <div class="container">
+      <h2>Locate Mosques</h2>
+      <!-- IMAGE CARDS -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="card"
+               onclick="window.open(
+                 'https://www.google.com/maps/search/?api=1&query=mosque',
+                 '_blank'
+               )">
+            <img src="images/mosque-spotlight.jpg" class="card-img-top" alt="Mosque Spotlight">
+            <div class="card-body">
+              <h5 class="card-title">Mosque Spotlight</h5>
+              <p class="card-text text-muted">Find prayer times near you.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card"
+               onclick="window.open(
+                 'https://www.google.com/maps/search/?api=1&query=prayer',
+                 '_blank'
+               )">
+            <img src="images/community-prayer.jpg" class="card-img-top" alt="Community Prayer">
+            <div class="card-body">
+              <h5 class="card-title">Community Prayer</h5>
+              <p class="card-text text-muted">Join local congregations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOGGLE BUTTONS & LISTS -->
+      <button class="btn btn-outline-primary btn-toggle" data-show="mosque-list">
+        Mosque Spotlight
+      </button>
+      <button class="btn btn-outline-secondary btn-toggle" data-show="event-list">
+        Community Prayer
+      </button>
+      <ul id="mosque-list" class="list-group mt-3"></ul>
+      <ul id="event-list" class="list-group mt-3"></ul>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section id="review">
+    <div class="container">
+      <h2>Leave a Review</h2>
+      <form id="review-form" class="mb-3">
+        <div class="form-row">
+          <div class="col-md-4 mb-2">
+            <select id="entity-type" class="form-control" required>
+              <option value="" disabled selected>Select Type</option>
+              <option>Restaurant</option>
+              <option>Mosque</option>
+            </select>
+          </div>
+          <div class="col-md-4 mb-2">
+            <input id="entity-name" class="form-control" placeholder="Type name here" required>
+          </div>
+          <div class="col-md-4 mb-2">
+            <button class="btn btn-success btn-block" type="submit">Submit Review</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea id="review-text" class="form-control" rows="3"
+                    placeholder="Write your review..." required></textarea>
+        </div>
+      </form>
+      <div id="review-message"></div>
+    </div>
+  </section>
+
+  <!-- FEATURED (RE‑ADDED) -->
+  <section id="featured" class="bg-light">
+    <div class="container">
+      <h2>Featured</h2>
+      <div class="featured">
+        <div class="card" onclick="scrollToSection('#review')">
+          <img src="images/social-feed.jpg" class="card-img-top" alt="Social Feed">
+          <div class="card-body">
+            <h6 class="card-title">Social Feed</h6>
+            <p class="card-text small text-muted">See community comments</p>
+          </div>
+        </div>
+        <div class="card" onclick="scrollToSection('#restaurants')">
+          <img src="images/taste-of-dhaka.jpg" class="card-img-top" alt="A Taste of Dhaka">
+          <div class="card-body">
+            <h6 class="card-title">A Taste of Dhaka</h6>
+            <p class="card-text small text-muted">Bengali Jackson Heights</p>
+          </div>
+        </div>
+        <div class="card" onclick="scrollToSection('#restaurants')">
+          <img src="images/campus-eats.jpg" class="card-img-top" alt="Campus Eats">
+          <div class="card-body">
+            <h6 class="card-title">Campus Eats</h6>
+            <p class="card-text small text-muted">NYU Halal Options</p>
+          </div>
+        </div>
+        <div class="card" onclick="scrollToSection('#restaurants')">
+          <img src="images/halal-steak.jpg" class="card-img-top" alt="Halal Steakhouses">
+          <div class="card-body">
+            <h6 class="card-title">Halal Steakhouses</h6>
+            <p class="card-text small text-muted">Sizzling, Seared, Savory</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2025 Halal:Go — Jazakallah Khair!
+  </footer>
+</div>
+
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Sidebar nav
+  document.querySelectorAll('#sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelectorAll('#sidebar .nav-link')
+              .forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      scrollToSection(link.getAttribute('data-target'));
+    });
+  });
+  function scrollToSection(sel){
+    document.querySelector(sel)
+            .scrollIntoView({ behavior:'smooth' });
+  }
+
+  // Toggle lists
+  const lists = {
+    'halal-list': ["Halal Delight","Spice Hub","Za’atar Bistro"],
+    'cafe-list': ["Yemeni Cafe","Aladdin’s Coffee","Middle Eastern Cafe"],
+    'mosque-list': ["Unity Mosque","Peace Mosque","Downtown Islamic Center"],
+    'event-list': ["Friday Prayer @ Unity Mosque",
+                   "Lecture @ Peace Mosque",
+                   "Community Iftar @ Islamic Center"]
+  };
+  document.querySelectorAll('.btn-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      Object.keys(lists).forEach(id => {
+        const ul = document.getElementById(id);
+        ul.style.display = 'none'; ul.innerHTML = '';
+      });
+      const showId = btn.getAttribute('data-show');
+      const ul = document.getElementById(showId);
+      lists[showId].forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = item;
+        ul.append(li);
+      });
+      ul.style.display = 'block';
+    });
+  });
+
+  // Hero search – filters halal-list only
+  document.getElementById('hero-search-btn').addEventListener('click', () => {
+    const q = document.getElementById('hero-search-input').value.trim().toLowerCase();
+    scrollToSection('#restaurants');
+    const data = lists['halal-list'].filter(name => name.toLowerCase().includes(q));
+    const ul = document.getElementById('halal-list');
+    ul.style.display = 'block'; ul.innerHTML = '';
+    if (data.length) {
+      data.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = item;
+        ul.append(li);
+      });
+    } else {
+      ul.innerHTML = '<li class="list-group-item">No matches found.</li>';
+    }
+  });
+
+  // Review form
+  document.getElementById('review-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('review-message').innerHTML =
+      '<div class="alert alert-success">Jazakallah Khair for your review!</div>';
+    this.reset();
+  });
+</script>
+</body>
+</html>
