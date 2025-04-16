@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>HalalGo</title>
+ <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ <header>
+   <nav class="navbar">
+     <div class="logo">HalalGo</div>
+     <ul class="nav-links">
+       <li><a href="#home">Home</a></li>
+       <li><a href="#restaurants">Restaurants</a></li>
+       <li><a href="#mosques">Mosques</a></li>
+       <li><a href="#reviews">Reviews</a></li>
+       <li><a href="#admin">Admin</a></li>
+     </ul>
+   </nav>
+ </header>
+
+
+ <section id="home" class="section">
+   <h1>Welcome to HalalGo</h1>
+   <p>Your trusted guide to Halal restaurants and mosques around you.</p>
+   <button onclick="scrollToSection('restaurants')">Find Restaurants</button>
+ </section>
+
+
+ <section id="restaurants" class="section">
+   <h2>Halal Restaurants Near You</h2>
+   <div class="card-container" id="restaurant-list">
+     <!-- JavaScript will populate this -->
+   </div>
+ </section>
+
+
+ <section id="mosques" class="section">
+   <h2>Nearby Mosques</h2>
+   <div class="card-container" id="mosque-list">
+     <!-- JavaScript will populate this -->
+   </div>
+ </section>
