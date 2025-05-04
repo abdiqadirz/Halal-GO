@@ -1,6 +1,6 @@
 # React + Vite Template
 
-A modern React template for Halal location services, featuring React 18, Vite, TailwindCSS, and Material UI.
+A modern React template for Halal location services, using React 18, Vite, TailwindCSS, and Material UI.
 
 
 ## Development Guidelines
