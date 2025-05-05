@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { locations } from '../data/locations';
+import { businesses } from '../data/businesses';
 import { getSubmissions } from '../utils/submissions';
 
 function Map({ selectedType, onLocationSelect }) {
@@ -10,7 +11,7 @@ function Map({ selectedType, onLocationSelect }) {
   const markersRef = useRef([]);
 
   useEffect(() => {
-    // Initialize map if not already initialized
+    // Initialize map
     if (!mapRef.current) {
       mapRef.current = L.map('map').setView([44.0121, -92.4802], 13);
 
@@ -19,20 +20,18 @@ function Map({ selectedType, onLocationSelect }) {
       }).addTo(mapRef.current);
     }
 
-    // Clear existing markers
+    // Remove old markers
     markersRef.current.forEach(marker => marker.remove());
     markersRef.current = [];
 
-    // Get verified locations and pending submissions
     const verifiedLocations = selectedType === 'all' 
       ? locations 
       : locations.filter(loc => loc.type === selectedType);
-    
+
     const submissions = getSubmissions().filter(sub => 
       selectedType === 'all' || sub.type === selectedType
     );
 
-    // Custom marker icons
     const verifiedIcon = L.divIcon({
       className: 'bg-green-500 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center',
       html: '<div class="w-4 h-4 bg-green-500 rounded-full"></div>',
@@ -81,30 +80,20 @@ function Map({ selectedType, onLocationSelect }) {
       markersRef.current.push(marker);
     });
 
-    // Add submission markers
-    submissions.forEach(submission => {
-      const [lat, lng] = submission.coordinates;
+    // Add pending submission markers
+    submissions.forEach(sub => {
+      const [lat, lng] = sub.coordinates;
 
       const popupContent = `
         <div class="p-2">
-          <h3 class="font-bold text-lg">${submission.name}</h3>
-          <p class="text-gray-600">${submission.address}</p>
-          ${submission.cuisine ? `<p class="text-gray-600">Cuisine: ${submission.cuisine}</p>` : ''}
-          ${submission.phone ? `<p class="text-gray-600">Phone: ${submission.phone}</p>` : ''}
+          <h3 class="font-bold text-lg">${sub.name}</h3>
+          <p class="text-gray-600">${sub.address}</p>
+          ${sub.cuisine ? `<p class="text-gray-600">Cuisine: ${sub.cuisine}</p>` : ''}
+          ${sub.phone ? `<p class="text-gray-600">Phone: ${sub.phone}</p>` : ''}
           <div class="mt-2">
             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
               Pending Verification
             </span>
-          </div>
-          <div class="mt-2 text-sm text-gray-500">
-            Submitted: ${new Date(submission.submissionDate).toLocaleDateString()}
-          </div>
-          <div class="mt-2 text-sm">
-            <strong>Halal Status:</strong> ${submission.halalCertType}
-            ${submission.certifyingAuthority ? 
-              `<br><strong>Certified by:</strong> ${submission.certifyingAuthority}` : 
-              ''
-            }
           </div>
         </div>
       `;
@@ -116,11 +105,13 @@ function Map({ selectedType, onLocationSelect }) {
       markersRef.current.push(marker);
     });
 
-    // Global function to handle "View Details" button clicks
+    // Override global function to pass full merged object (with menu)
     window.selectLocation = (locationId) => {
       const location = locations.find(loc => loc.id === locationId);
       if (location) {
-        onLocationSelect(location);
+        const business = businesses.find(b => b.id === location.businessId);
+        const merged = business ? { ...location, menu: business.menu } : location;
+        onLocationSelect(merged);
       }
     };
 
