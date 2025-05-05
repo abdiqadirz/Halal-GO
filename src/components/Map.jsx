@@ -49,6 +49,8 @@ function Map({ selectedType, onLocationSelect }) {
 
     // Add verified location markers
     verifiedLocations.forEach(location => {
+      const [lat, lng] = location.coordinates;
+
       const popupContent = `
         <div class="p-2">
           <h3 class="font-bold text-lg">${location.name}</h3>
@@ -72,7 +74,7 @@ function Map({ selectedType, onLocationSelect }) {
         </div>
       `;
 
-      const marker = L.marker([location.lat, location.lng], { icon: verifiedIcon })
+      const marker = L.marker([lat, lng], { icon: verifiedIcon })
         .bindPopup(popupContent)
         .addTo(mapRef.current);
 
@@ -81,6 +83,8 @@ function Map({ selectedType, onLocationSelect }) {
 
     // Add submission markers
     submissions.forEach(submission => {
+      const [lat, lng] = submission.coordinates;
+
       const popupContent = `
         <div class="p-2">
           <h3 class="font-bold text-lg">${submission.name}</h3>
@@ -105,14 +109,14 @@ function Map({ selectedType, onLocationSelect }) {
         </div>
       `;
 
-      const marker = L.marker([submission.lat, submission.lng], { icon: pendingIcon })
+      const marker = L.marker([lat, lng], { icon: pendingIcon })
         .bindPopup(popupContent)
         .addTo(mapRef.current);
 
       markersRef.current.push(marker);
     });
 
-    // Add global function to handle location selection from popup
+    // Global function to handle "View Details" button clicks
     window.selectLocation = (locationId) => {
       const location = locations.find(loc => loc.id === locationId);
       if (location) {
