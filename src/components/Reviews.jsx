@@ -5,7 +5,7 @@ import { getReviews, addReview } from '../utils/storage';
 function Reviews({ location }) {
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ name: '', rating: 5, comment: '' });
-  
+
   useEffect(() => {
     if (location) {
       const locationReviews = getReviews(location.id);
@@ -35,6 +35,25 @@ function Reviews({ location }) {
         {location.phone && <p className="text-gray-600">Phone: {location.phone}</p>}
       </div>
 
+      {/* Menu Section */}
+      {location.menu && location.menu.length > 0 && (
+        <div className="mt-6">
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">Menu</h3>
+          <ul className="space-y-4">
+            {location.menu.map((item, index) => (
+              <li key={index} className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-gray-900">{item.name}</span>
+                  <span className="text-green-600 font-semibold">{item.price}</span>
+                </div>
+                <p className="text-gray-600 text-sm mt-1">{item.description}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Reviews Section */}
       <div>
         <h3 className="text-xl font-semibold mb-4">Reviews</h3>
         <div className="space-y-4 mb-6">
